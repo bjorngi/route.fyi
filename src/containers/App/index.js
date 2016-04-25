@@ -7,14 +7,14 @@ import './styles/app.scss';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 
+import 'font-awesome/scss/font-awesome.scss';
+
 export class App extends Component {
   static propTypes = {
     children: React.PropTypes.any,
   };
 
   render() {
-    console.log(this.props.children);
-    
     return (
       <section>
         {this.props.children}

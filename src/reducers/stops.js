@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment-duration-format';
 
 const initialState = {
   stops: {
@@ -10,30 +11,55 @@ const initialState = {
         {
           'id': 0,
           'prevStop': [],
+          'name': 'Sandra',
           'icon': 'busstop',
         }, {
           'id': 1,
-          'icon': 'trainstation',
+          'name': 'Torshov',
+          'icon': 'tramstation',
           'prevStop': [
             {
               'stopId': 0,
-              'transport': 'tram',
-              'time': moment.duration(40, 'minutes'),
-            }, {
-              'stopId': 0,
-              'transport': 'tram',
-              'time': moment.duration(40, 'minutes'),
-            },
-          ],
+              'transport': 'male',
+              'time': moment.duration(3, 'minutes'),
+            }
+         ],
         }, {
           'id': 2,
-          'icon': 'trainstation',
+          'name': 'Brugata',
+          'icon': 'tramstation',
           'prevStop': [
             {
               'stopId': 1,
+              'transport': 'subway',
+              'time': moment.duration(25, 'minutes'),
+            },
+         ],
+        }, {
+          'id': 3,
+          'icon': 'trainstation',
+          'name': 'Oslo S',
+          'prevStop': [
+            {
+              'stopId': 2,
+              'transport': 'subway',
+              'time': moment.duration(5, 'minutes'),
+            },
+            {
+              'stopId': 1,
+              'transport': 'taxi',
+              'time': moment.duration(10, 'minutes'),
+            },
+          ],
+        }, {
+          'id': 4,
+          'icon': 'trainstation',
+          'name': 'Oslo Lufthavn',
+          'prevStop': [
+            {
+              'stopId': 3,
               'transport': 'train',
-              'icon': 'busstop',
-              'time': moment.duration(40, 'minutes'),
+              'time': moment.duration(30, 'minutes'),
             }
           ],
         }
@@ -44,20 +70,31 @@ const initialState = {
 export function stops(state = initialState, action) {
   switch(action.type) {
     case 'ADD_STOP':
-      console.log(state);
-      
+      let newStopId = Math.max.apply(Math, state.stops.stops.map((stop) => {
+        return stop.id; 
+      })) + 1;
+
       const newState = {
+        ...state,
+        stops: {
+          ...state.stops,
+          stops: [
+            ...state.stops.stops,
+            {
+              id: newStopId,
+              icon: action.fields.icon.value,
+              name: action.fields.name.value,
+              prevStop: [{
+                stopId: Number(action.fields.prevStop.stopId.value),
+                transport: action.fields.prevStop.transport.value,
+                time: moment.duration(Number(action.fields.prevStop.time.value), 'minutes'),
+              }],
+            }
+          ]
+        }
       };
 
-      const newStops = [
-        ...state.stops
-      ]
-
-      console.log(newStops);
-      
-      console.log(newState);
-      return state;
-      
+      return newState;
       
     //case 'DEL_STOP':
 

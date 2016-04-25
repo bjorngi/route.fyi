@@ -34,7 +34,6 @@ export class RouteView extends Component {
   }
 
   render() {
-    console.info(this.props) // DEBUG PRINT
     return (
       <section>
         <div className = "container">

@@ -44,9 +44,12 @@ export class AddItem extends Component {
           />
         </div>
         <div className="form-group">
-          <button className="btn btn-default" onClick={this.onAdd}>
-            Add item
-          </button>
+
+          <input type='submit'
+            className="btn btn-default"
+            onClick={this.onAdd}>
+              Add item
+          </input>
         </div>
       </form>
     );

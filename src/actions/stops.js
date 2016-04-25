@@ -1,7 +1,6 @@
-export function addStop(icon, prevStop=[]) {
+export function addStop(fields) {
   return {
     type: 'ADD_STOP',
-    icon,
-    prevStop,
+    fields,
   }
 }

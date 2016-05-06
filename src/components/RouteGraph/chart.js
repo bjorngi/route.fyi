@@ -9,41 +9,33 @@ export default class RouteNetwork {
 
 
     this.force = d3.layout.force()
-    .gravity(.05)
-    .distance(100)
-    .charge(-100)
     .size([size.width, size.height]);
 
     this.update(el, data);
   }
 
   update(el, data) {
+    
     let formatedData = this.formatData(data);
 
     this.force
       .nodes(formatedData.nodes)
-      .links(formatedData.links)
-      .start();
+      .links(formatedData.links);
 
     var link = this.svg.selectAll(".link")
       .data(formatedData.links)
       .enter().append("line")
-      .attr("class", "link")
-      .style("stroke-width", function(d) { return Math.sqrt(d.weight); });
+      .attr("class", "link");
 
     var node = this.svg.selectAll(".node")
       .data(formatedData.nodes)
       .enter().append("g")
       .attr("class", "node")
-      .call(this.force.drag);
 
-    node.append("circle")
-      .attr("r","5");
-
-    node.append("text")
-      .attr("dx", 12)
-      .attr("dy", ".35em")
-      .text(function(d) { return d.name });
+    //node.append("text")
+    //  .attr("dx", 12)
+    //  .attr("dy", ".35em")
+    //  .text(function(d) { return d.name });
 
     this.force.on("tick", function() {
       link.attr("x1", function(d) { return d.source.x; })
@@ -54,9 +46,20 @@ export default class RouteNetwork {
       node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     }); 
 
+    this.force.start();
   }
 
   formatData(data) {
+
+    return {
+      nodes: [
+        { x:   this.width/3, y: this.height/2 },
+        { x: 2*this.width/3, y: this.height/2 }
+      ],
+      links: [
+        { source: 0, target: 1 }
+      ]
+    };
     let formatedData = {
       nodes: [],
       links: [],
@@ -76,20 +79,8 @@ export default class RouteNetwork {
     });
 
     console.log(formatedData);
+    
+
     return formatedData;
-    
-    
-    return {
-      "nodes":[
-        {"name":"node1","group":1},
-        {"name":"node2","group":2},
-        {"name":"node3","group":2},
-        {"name":"node4","group":3},
-      ],
-      "links":[
-    		{"source":2,"target":1,"weight":1},
-    		{"source":0,"target":2,"weight":3},
-    	]
-    }
-  }
+ }
 }

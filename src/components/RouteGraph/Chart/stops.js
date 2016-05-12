@@ -12,7 +12,7 @@ export default class Stops extends Component {
     let transportIcon = (icon) => {
       switch(icon) {
         case 'plane':
-          return '&#xf072';
+          return '\uf072';
           break;
         default:
           return 'meh';

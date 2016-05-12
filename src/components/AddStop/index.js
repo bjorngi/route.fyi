@@ -17,6 +17,7 @@ export class AddStop extends Component {
   }
 
   onAdd = (event) => {
+    console.log('HIT');
     if(this.props.fields.icon) {
       this.props.addStop(this.props.fields);
     }
@@ -87,7 +88,7 @@ export class AddStop extends Component {
 
 
 
-        <button className={'btn'} onClick={this.onAdd}>
+        <button className={'btn'} type='submit'>
         Add stop
         </button>
  
